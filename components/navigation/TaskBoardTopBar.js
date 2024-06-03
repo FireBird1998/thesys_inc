@@ -3,12 +3,8 @@ import { useState, useEffect } from "react";
 import { Pencil } from "lucide-react";
 
 const TaskBoardTopBar = () => {
-  const [title, setTitle] = useState("Task Boards");
+  const [title, setTitle] = useState('');
   const [edit, setEdit] = useState(false);
-
-  useEffect(() => {
-    localStorage.setItem("title", title);
-  }, [title]);
 
   useEffect(() => {
     // Check if window object exists
@@ -17,9 +13,16 @@ const TaskBoardTopBar = () => {
       const storedTitle = localStorage.getItem("title");
       if (storedTitle) {
         setTitle(storedTitle);
+      } else {
+        setTitle("Task Boards");
       }
     }
   }, []);
+  
+  useEffect(() => {
+    localStorage.setItem("title", title);
+  }, [title]);
+  
   const handleEdit = () => {
     setEdit(!edit);
   };
