@@ -29,7 +29,7 @@ const Task = ({ task, index }) => {
             </button>
           </div>
           <div className="flex justify-start p-1">
-            <span className=" text-gray-800">{task.title}</span>
+            <span className=" text-gray-800">{task.description}</span>
           </div>
           <div className="flex justify-between p-1 items-center">
             <div className="flex text-gray-400 items-center gap-2">
@@ -54,11 +54,7 @@ const Task = ({ task, index }) => {
                 src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
                 alt=""
               />
-              <img
-                class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
+              
             </div>
           </div>
           {provided.placeholder}

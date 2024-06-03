@@ -10,17 +10,24 @@ export const KanbanProvider = ({ children }) => {
   const [todo, setTodo] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [done, setDone] = useState([]);
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => response.json())
-      .then((json) => {
-        // Distribute tasks based on their properties
-        setBackLog(json.filter((task) => task.status === "backlog"));
-        setTodo(json.filter((task) => task.completed === false));
-        setInProgress(json.filter((task) => task.status === "in-progress"));
-        setDone(json.filter((task) => task.completed === true));
-      });
-  }, []);
+    
+
+  const addToColumn = (columnId, task) => {
+    switch (columnId) {
+      case "backlog":
+        setBackLog((prevTasks) => [...prevTasks, task]);
+        break;
+      case "todo":
+        setTodo((prevTasks) => [...prevTasks, task]);
+        break;
+      case "in-progress":
+        setInProgress((prevTasks) => [...prevTasks, task]);
+        break;
+      case "done":
+        setDone((prevTasks) => [...prevTasks, task]);
+        break;
+    }
+  };
 
   // This function is called when the drag operation ends
   const handleDragEnd = (result) => {
@@ -131,6 +138,7 @@ export const KanbanProvider = ({ children }) => {
         getSourceItems,
         getDestinationItems,
         setSourceItems,
+        addToColumn,
         setDestinationItems,
       }}
     >
@@ -141,18 +149,8 @@ export const KanbanProvider = ({ children }) => {
 
 export const useKanban = () => useContext(KanbanContext);
 
-
-
-
 const KanbanBoard = () => {
-
-    const {
-      backLog,
-      todo,
-      inProgress,
-      done,
-      handleDragEnd,
-    } = useKanban();
+  const { backLog, todo, inProgress, done, handleDragEnd } = useKanban();
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
