@@ -175,7 +175,7 @@ const KanbanBoard = () => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex justify-between items-center flex-row">
+      <div className="flex flex-row items-center justify-between w-full">
         <Column title="Backlog" tasks={backLog} id="backlog" />
         <Column title="Todo" tasks={todo} id="todo" />
         <Column title="In Progress" tasks={inProgress} id="in-progress" />

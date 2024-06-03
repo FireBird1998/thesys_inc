@@ -32,10 +32,10 @@ const Column = ({ title, tasks, id }) => {
   };
 
   return (
-    <div className="rounded-md w-[275px] board-height overflow-y-scroll column">
+    <div className="rounded-md min-w-[230px] board-height overflow-y-scroll column">
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-start gap-4">
-          <h3 className="text-lg font-semibold p-4">{title}</h3>
+          <h3 className="p-4 text-lg font-semibold">{title}</h3>
           <span
             className={`text-sm py-1 px-2 rounded-full font-semibold
             ${id === "backlog" && "bg-orange-200 text-orange-600"}
@@ -48,7 +48,7 @@ const Column = ({ title, tasks, id }) => {
           </span>
         </div>
         <button
-          className=" rounded-md mr-3 flex text-gray-500"
+          className="flex mr-3 text-gray-500 rounded-md "
           onClick={() => console.log("column 3 dot click")}
         >
           <GripHorizontal size={20} />
@@ -56,10 +56,10 @@ const Column = ({ title, tasks, id }) => {
       </div>
       <div className="p-2">
         <button
-          className="rounded-md w-full p-2 text-sm bg-slate-100 text-gray-500 flex items-center justify-center"
+          className="flex items-center justify-center w-full p-2 text-sm text-gray-500 rounded-md bg-slate-100"
           onClick={addTask}
         >
-          <span className="p-1 rounded-full bg-gray-200">
+          <span className="p-1 bg-gray-200 rounded-full">
             <Plus size={20} className="text-grau-800" />
           </span>
         </button>

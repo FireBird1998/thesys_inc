@@ -3,20 +3,23 @@ import { KanbanProvider } from "@/components/kanbanBoardItems/KanbanBoard";
 import TaskBoardTopBar from "@/components/navigation/TaskBoardTopBar";
 import React from "react";
 import { useLayout } from "@/context/layoutContex";
+import PeopleSideBar from "@/components/Others/PeopleSideBar";
 
 const Layout = ({ children }) => {
   const { showSidebar } = useLayout();
   return (
-    <div>
-      <KanbanProvider>
-        <TaskBoardTopBar />
-        <div
-          className={`${showSidebar ? "whenSidebarOpen" : " whenSidebarClose"}`}
-        >
+    <KanbanProvider>
+      <div
+        className={`${showSidebar ? "whenSidebarOpen" : " whenSidebarClose"}`}
+      >  
+          <TaskBoardTopBar />
           {children}
-        </div>
-      </KanbanProvider>
-    </div>
+          
+      </div>
+      <div>
+        <PeopleSideBar />
+      </div>
+    </KanbanProvider>
   );
 };
 
