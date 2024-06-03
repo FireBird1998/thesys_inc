@@ -3,6 +3,7 @@ import React, { useState, useEffect, createContext, useContext } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 
+
 export const KanbanContext = createContext();
 
 export const KanbanProvider = ({ children }) => {
@@ -25,6 +26,25 @@ export const KanbanProvider = ({ children }) => {
         break;
       case "done":
         setDone((prevTasks) => [...prevTasks, task]);
+        break;
+    }
+  };
+
+  const deleteTask = (columnId, taskId) => {
+    switch (columnId) {
+      case "backlog":
+        //prevTasks is the previous state of the tasks in the backlog
+        //We filter out the task with the taskId that we want to delete
+        setBackLog((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        break;
+      case "todo":
+        setTodo((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        break;
+      case "in-progress":
+        setInProgress((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        break;
+      case "done":
+        setDone((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
         break;
     }
   };
@@ -140,6 +160,7 @@ export const KanbanProvider = ({ children }) => {
         setSourceItems,
         addToColumn,
         setDestinationItems,
+        deleteTask,
       }}
     >
       {children}

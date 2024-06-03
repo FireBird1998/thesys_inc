@@ -3,36 +3,34 @@ import { Droppable } from "react-beautiful-dnd";
 import Task from "./Task";
 import { GripHorizontal, Plus } from "lucide-react";
 import { useKanban } from "./KanbanBoard";
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from "uuid";
 import { tasksarr } from "@/constants";
 
-
-
 const Column = ({ title, tasks, id }) => {
-  const { addToColumn } = useKanban(); 
+  const { addToColumn } = useKanban();
 
   const addTask = () => {
     if (tasksarr.length === 0) {
-        // If there are no more tasks in tasksarr, do nothing
-        return;
-      }
-  
-      // Select a random index
-      const randomIndex = Math.floor(Math.random() * tasksarr.length);
-  
-      // Get the task at the random index
-      const randomTask = tasksarr[randomIndex];
-  
-      // Add a unique id to the task
-      randomTask.id = uuid();
-  
-      // Add the task to the column
-      addToColumn(id, randomTask);
+      // If there are no more tasks in tasksarr, do nothing
+      return;
+    }
 
-        // Remove the task from tasksarr
-        tasksarr.splice(randomIndex, 1);
+    // Select a random index
+    const randomIndex = Math.floor(Math.random() * tasksarr.length);
+
+    // Get the task at the random index
+    const randomTask = tasksarr[randomIndex];
+
+    // Add a unique id to the task
+    randomTask.id = uuid();
+
+    // Add the task to the column
+    addToColumn(id, randomTask);
+
+    // Remove the task from tasksarr
+    tasksarr.splice(randomIndex, 1);
   };
-  
+
   return (
     <div className="rounded-md w-[275px] board-height overflow-y-scroll column">
       <div className="flex items-center justify-between">
@@ -76,7 +74,7 @@ const Column = ({ title, tasks, id }) => {
             isDraggingOver={snapshot.isDraggingOver}
           >
             {tasks.map((task, index) => (
-              <Task key={index} index={index} task={task} />
+              <Task key={index} index={index} task={task} columnId={id} />
             ))}
             {provided.placeholder}
           </div>
