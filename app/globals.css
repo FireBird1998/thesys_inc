@@ -16,3 +16,12 @@
 .board-height {
     height: calc(100vh - 112px);
 }
+
+.whenSidebarOpen {
+    width: calc(100vw - 288px);
+    padding: 0 10px 0 10px;
+}
+.whenSidebarClose {
+    width: calc(100vw - 69px);
+    padding: 0 10px 0 10px;
+}   

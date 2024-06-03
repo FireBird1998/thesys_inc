@@ -18,21 +18,21 @@ import { sidebarItems } from "@/constants";
   const router = useRouter();
 
   return (
-    <aside className={`h-screen ${showSidebar ? " w-72" : ""}`}>
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-        <div className="p-4 pb-2 flex justify-between items-center">
+    <aside className={`h-screen ${showSidebar ? "w-72" : " w-[69px]"}`}>
+      <nav className="flex flex-col h-full bg-white border-r shadow-sm">
+        <div className="flex items-center justify-between p-4 pb-2">
           <div className="flex items-center justify-between w-full">
             {showSidebar && (
-              <h1 className="font-semibold text-lg" onClick={() => {router.push('/')}}>Dashboard</h1>
+              <h1 className="text-lg font-semibold" onClick={() => {router.push('/')}}>Dashboard</h1>
             )}
             <button
               onClick={() => toggleSidebar()}
               className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
             >
               {showSidebar ? (
-                <PanelLeftClose className=" text-gray-600" />
+                <PanelLeftClose className="text-gray-600 " />
               ) : (
-                <PanelLeftOpen className=" text-gray-600" />
+                <PanelLeftOpen className="text-gray-600 " />
               )}
             </button>
           </div>
@@ -106,9 +106,9 @@ const DropdownButton = () => {
         Dashboards
       </span>
       {showSidebarDropdown ? (
-        <ChevronUp size={20} className=" text-blue-600" />
+        <ChevronUp size={20} className="text-blue-600 " />
       ) : (
-        <ChevronDown size={20} className=" text-blue-600" />
+        <ChevronDown size={20} className="text-blue-600 " />
       )}
     </button>
   );

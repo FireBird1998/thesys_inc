@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, createContext, useContext } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 
 
-export const KanbanContext = createContext();
+const KanbanContext = createContext();
 
 export const KanbanProvider = ({ children }) => {
   const [backLog, setBackLog] = useState([]);
@@ -12,7 +12,7 @@ export const KanbanProvider = ({ children }) => {
   const [inProgress, setInProgress] = useState([]);
   const [done, setDone] = useState([]);
     
-
+// Function to add a task to a column
   const addToColumn = (columnId, task) => {
     switch (columnId) {
       case "backlog":
@@ -29,7 +29,7 @@ export const KanbanProvider = ({ children }) => {
         break;
     }
   };
-
+// Function to delete a task from a column
   const deleteTask = (columnId, taskId) => {
     switch (columnId) {
       case "backlog":
