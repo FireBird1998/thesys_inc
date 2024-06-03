@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.column {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll;
+}
+
+.column::-webkit-scrollbar {
+    display: none;
+}
+
+.board-height {
+    height: calc(100vh - 112px);
+}
