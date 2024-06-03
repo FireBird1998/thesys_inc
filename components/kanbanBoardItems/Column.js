@@ -1,11 +1,30 @@
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Task from "./Task";
+import { GripHorizontal } from 'lucide-react';
 
 const Column = ({ title, tasks, id }) => {
   return (
     <div className="rounded-md w-[275px] board-height overflow-y-scroll column">
-      <h3 className="text-lg font-semibold p-4">{title}</h3>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center justify-start gap-4">
+          <h3 className="text-lg font-semibold p-4">{title}</h3>
+          <span
+            className={`text-sm py-1 px-2 rounded-full font-semibold
+            ${id === "backlog" && "bg-orange-200 text-orange-600"}
+            ${id === "todo" && " bg-pink-200 text-pink-600"}
+            ${id === "in-progress" && "bg-purple-200 text-purple-600"}
+            ${id === "done" && "bg-green-200 text-green-600"}
+              `}
+          >
+            {tasks.length}
+          </span>
+        </div>
+        <button className=" rounded-md mr-3 flex text-gray-500" onClick={() => console.log("delete")}>
+            <GripHorizontal size={20} />
+        </button>
+
+      </div>
       <Droppable droppableId={id}>
         {(provided, snapshot) => (
           <div

@@ -1,14 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 
-const KanbanBoard = () => {
+export const KanbanContext = createContext();
+
+export const KanbanProvider = ({ children }) => {
   const [backLog, setBackLog] = useState([]);
   const [todo, setTodo] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [done, setDone] = useState([]);
-
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/todos")
       .then((response) => response.json())
@@ -83,7 +84,6 @@ const KanbanBoard = () => {
         return [];
     }
   }
-
   // Function to update the source items
   function setSourceItems(sourceDroppableId, items) {
     switch (sourceDroppableId) {
@@ -119,6 +119,40 @@ const KanbanBoard = () => {
         break;
     }
   }
+
+  return (
+    <KanbanContext.Provider
+      value={{
+        backLog,
+        todo,
+        inProgress,
+        done,
+        handleDragEnd,
+        getSourceItems,
+        getDestinationItems,
+        setSourceItems,
+        setDestinationItems,
+      }}
+    >
+      {children}
+    </KanbanContext.Provider>
+  );
+};
+
+export const useKanban = () => useContext(KanbanContext);
+
+
+
+
+const KanbanBoard = () => {
+
+    const {
+      backLog,
+      todo,
+      inProgress,
+      done,
+      handleDragEnd,
+    } = useKanban();
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>

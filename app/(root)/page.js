@@ -5,6 +5,8 @@ const page = () => {
   return (
     <div>
       Home Page Content
+
+      Go to Tasks
     </div>
   )
 }
