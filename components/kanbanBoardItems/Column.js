@@ -68,7 +68,7 @@ const Column = ({ title, tasks, id }) => {
       <Droppable droppableId={id}>
         {(provided, snapshot) => (
           <div
-            className="p-1 transition-colors duration-200 ease-in-out flex-grow min-h-[300px]"
+            className="p-1 transition-colors duration-200 ease-in-out flex-grow min-h-[100%]"
             ref={provided.innerRef}
             {...provided.droppableProps}
             isDraggingOver={snapshot.isDraggingOver}

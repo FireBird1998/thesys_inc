@@ -1,54 +1,97 @@
 "use client";
-import React, { useState, createContext, useContext, useEffect } from "react";
+import React, { useState, createContext, useContext, useEffect, useMemo } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 
 const KanbanContext = createContext();
 
 export const KanbanProvider = ({ children }) => {
+  
   const [backLog, setBackLog] = useState([]);
   const [todo, setTodo] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [done, setDone] = useState([]);
   const [search, setSearch] = useState("");
 
-  // useEffect(() => {
-  //   console.log("Search", search);
-  // }, [search]);
+  // Load and restoring the tasks from local storage when the component mounts
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedBackLog = localStorage.getItem("backLog");
+      const storedTodo = localStorage.getItem("todo");
+      const storedInProgress = localStorage.getItem("inProgress");
+      const storedDone = localStorage.getItem("done");
+
+      if (storedBackLog) setBackLog(JSON.parse(storedBackLog));
+      if (storedTodo) setTodo(JSON.parse(storedTodo));
+      if (storedInProgress) setInProgress(JSON.parse(storedInProgress));
+      if (storedDone) setDone(JSON.parse(storedDone));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("backLog", JSON.stringify(backLog));
+  }, [backLog]);
+
+  useEffect(() => {
+    localStorage.setItem("todo", JSON.stringify(todo));
+  }, [todo]);
+
+  useEffect(() => {
+    localStorage.setItem("inProgress", JSON.stringify(inProgress));
+  }, [inProgress]);
+
+  useEffect(() => {
+    localStorage.setItem("done", JSON.stringify(done));
+  }, [done]);
 
   //these are derived state values for the filtered tasks
-  const filteredBacklog = backLog.filter((item) => {
-    return (
-      item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase())
-    );
-  });
-  const filteredTodo = todo.filter((item) => {
-    return (
-      item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase())
-    );
-  });
-  const filteredInProgress = inProgress.filter((item) => {
-    return (
-      item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase())
-    );
-  });
-  const filteredDone = done.filter((item) => {
-    return (
-      item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase())
-    );
-  });
+  //the tasks are filtered based on the search query
+  //the useMemo hook is used to memoize the filtered tasks and the search query for performance optimization
+ const filteredBacklog = useMemo(
+   () =>
+     backLog.filter((item) => {
+       return (
+         item.title.toLowerCase().includes(search.toLowerCase()) ||
+         item.description.toLowerCase().includes(search.toLowerCase())
+       );
+     }),
+   [backLog, search]
+ );
 
-  // useEffect(() => {
-  //   console.log("Backlog", backLog);
-  //   console.log("Todo", todo);
-  //   console.log("In Progress", inProgress);
-  //   console.log("Done", done);
-  // }, [backLog, todo, inProgress, done]);
+ const filteredTodo = useMemo(
+   () =>
+     todo.filter((item) => {
+       return (
+         item.title.toLowerCase().includes(search.toLowerCase()) ||
+         item.description.toLowerCase().includes(search.toLowerCase())
+       );
+     }),
+   [todo, search]
+ );
 
+ const filteredInProgress = useMemo(
+   () =>
+     inProgress.filter((item) => {
+       return (
+         item.title.toLowerCase().includes(search.toLowerCase()) ||
+         item.description.toLowerCase().includes(search.toLowerCase())
+       );
+     }),
+   [inProgress, search]
+ );
+
+ const filteredDone = useMemo(
+   () =>
+     done.filter((item) => {
+       return (
+         item.title.toLowerCase().includes(search.toLowerCase()) ||
+         item.description.toLowerCase().includes(search.toLowerCase())
+       );
+     }),
+   [done, search]
+ );
+
+  
   // Function to add a task to a column
   const addToColumn = (columnId, task) => {
     switch (columnId) {
