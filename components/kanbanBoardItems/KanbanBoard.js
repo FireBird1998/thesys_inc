@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
-
 
 const KanbanContext = createContext();
 
@@ -11,8 +10,45 @@ export const KanbanProvider = ({ children }) => {
   const [todo, setTodo] = useState([]);
   const [inProgress, setInProgress] = useState([]);
   const [done, setDone] = useState([]);
-    
-// Function to add a task to a column
+  const [search, setSearch] = useState("");
+
+  // useEffect(() => {
+  //   console.log("Search", search);
+  // }, [search]);
+
+  const filteredBacklog = backLog.filter((item) => {
+    return (
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+  const filteredTodo = todo.filter((item) => {
+    return (
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+  const filteredInProgress = inProgress.filter((item) => {
+    return (
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+  const filteredDone = done.filter((item) => {
+    return (
+      item.title.toLowerCase().includes(search.toLowerCase()) ||
+      item.description.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+
+  useEffect(() => {
+    console.log("Backlog", backLog);
+    console.log("Todo", todo);
+    console.log("In Progress", inProgress);
+    console.log("Done", done);
+  }, [backLog, todo, inProgress, done]);
+
+  // Function to add a task to a column
   const addToColumn = (columnId, task) => {
     switch (columnId) {
       case "backlog":
@@ -29,19 +65,23 @@ export const KanbanProvider = ({ children }) => {
         break;
     }
   };
-// Function to delete a task from a column
+  // Function to delete a task from a column
   const deleteTask = (columnId, taskId) => {
     switch (columnId) {
       case "backlog":
         //prevTasks is the previous state of the tasks in the backlog
         //We filter out the task with the taskId that we want to delete
-        setBackLog((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        setBackLog((prevTasks) =>
+          prevTasks.filter((task) => task.id !== taskId)
+        );
         break;
       case "todo":
         setTodo((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
         break;
       case "in-progress":
-        setInProgress((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+        setInProgress((prevTasks) =>
+          prevTasks.filter((task) => task.id !== taskId)
+        );
         break;
       case "done":
         setDone((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
@@ -161,6 +201,12 @@ export const KanbanProvider = ({ children }) => {
         addToColumn,
         setDestinationItems,
         deleteTask,
+        search,
+        setSearch,
+        filteredBacklog,
+        filteredTodo,
+        filteredInProgress,
+        filteredDone,
       }}
     >
       {children}
@@ -171,15 +217,29 @@ export const KanbanProvider = ({ children }) => {
 export const useKanban = () => useContext(KanbanContext);
 
 const KanbanBoard = () => {
-  const { backLog, todo, inProgress, done, handleDragEnd } = useKanban();
+  const {
+    backLog,
+    todo,
+    inProgress,
+    done,
+    handleDragEnd,
+    filteredBacklog,
+    filteredTodo,
+    filteredInProgress,
+    filteredDone,
+  } = useKanban();
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-row items-center justify-between w-full">
-        <Column title="Backlog" tasks={backLog} id="backlog" />
-        <Column title="Todo" tasks={todo} id="todo" />
-        <Column title="In Progress" tasks={inProgress} id="in-progress" />
-        <Column title="Done" tasks={done} id="done" />
+      <div className="flex flex-row items-center justify-between w-full ">
+        <Column title="Backlog" tasks={filteredBacklog} id="backlog" />
+        <Column title="Todo" tasks={filteredTodo} id="todo" />
+        <Column
+          title="In Progress"
+          tasks={filteredInProgress}
+          id="in-progress"
+        />
+        <Column title="Done" tasks={filteredDone} id="done" />
       </div>
     </DragDropContext>
   );

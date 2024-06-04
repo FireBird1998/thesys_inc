@@ -1,7 +1,7 @@
-
 import React from "react";
-import { X } from "lucide-react";
+import { X, ArrowRightFromLine } from "lucide-react";
 import Image from "next/image";
+import { p1, p2, p3, p4, p5 } from "@/public/assets";
 
 const PeopleSideBar = () => {
   return (
@@ -11,36 +11,45 @@ const PeopleSideBar = () => {
       <button className="flex items-center justify-center w-full h-20 p-2 text-sm text-gray-500 border-b-2 border-gray-200">
         <X />
       </button>
-      <div className="flex flex-col items-center justify-center">
-        {/* <Avatar
+      <div className="flex flex-col items-center justify-center gap-2">
+        <Avatar
           name="John Doe"
-          src="https://robohash.org/stefan-one"
+          src={p1}
         />
         <Avatar
           name="Jane Doe"
-          src="https://robohash.org/stefan-one"
+          src={p2}
         />
         <Avatar
           name="John Doe"
-          src="https://robohash.org/stefan-one"
+          src={p3}
         />
         <Avatar
           name="Jane Doe"
-          src="https://robohash.org/stefan-one"
+          src={p4}
         />
         <Avatar
           name="John Doe"
-          src="https://robohash.org/stefan-one"
-        /> */}
-        </div>
+          src={p5}
+        />
+      </div>
+      <button className="flex items-center justify-center w-full h-20 p-2 text-sm text-gray-500 border-t-2 border-gray-200">
+        <ArrowRightFromLine />
+      </button>
     </section>
   );
 };
 
 const Avatar = ({ name, src }) => {
   return (
-    <div className="flex items-center gap-2">
-      <Image src={src} alt={name} width={32} height={32} className="rounded-full " />
+    <div className="flex items-center gap-2 border-2 border-gray-200 rounded-full">
+      <Image
+        src={src}
+        alt={name}
+        width={42}
+        height={42}
+        className="rounded-full "
+      />
     </div>
   );
 };

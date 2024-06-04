@@ -1,10 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Pencil, Search } from "lucide-react";
+import { useKanban } from "../kanbanBoardItems/KanbanBoard";
 
 const TaskBoardTopBar = () => {
   const [title, setTitle] = useState("");
   const [edit, setEdit] = useState(false);
+  const {search, setSearch} = useKanban();
+
+ 
 
   useEffect(() => {
     // Check if window object exists
@@ -34,7 +38,7 @@ const TaskBoardTopBar = () => {
   };
 
   return (
-    <section className="w-full h-20 flex items-center p-4 gap-5 justify-between">
+    <section className="flex items-center justify-between w-full h-20 gap-5 p-4">
       <div className="flex items-center justify-center gap-5">
         {edit ? (
           <input
@@ -42,7 +46,7 @@ const TaskBoardTopBar = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={handleKeyPress}
-            className=" p-2 border border-gray-300 rounded-md"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none"
           />
         ) : (
           <h1 className="text-2xl font-bold text-black">{title}</h1>
@@ -51,12 +55,14 @@ const TaskBoardTopBar = () => {
           <Pencil className="text-gray-600" />
         </button>
       </div>
-      <div className="flex items-center px-2 justify-center border border-gray-300 rounded-md">
+      <div className="flex items-center justify-center px-2 border border-gray-300 rounded-md">
         <Search size={20} className="text-gray-600 " />
         <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           type="text"
           placeholder="Search Tasks"
-          className="w-60 p-2 border-none border-transparent focus:outline-none"
+          className="p-2 border-transparent border-none w-60 focus:outline-none"
         />
       </div>
     </section>
