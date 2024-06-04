@@ -8,8 +8,13 @@ export const useLayout = () => useContext(LayoutContext);
 export default function LayoutContextProvider({ children }) {
   const [showSidebar, setShowSidebar] = useState(true);
   const [showSidebarDropdown, setShowSidebarDropdown] = useState(true);
+  const [showPeopleSidebar, setShowPeopleSidebar] = useState(true);
+
   const toggleSidebar = () => setShowSidebar((curr) => !curr);
   const toggleSidebarDropdown = () => setShowSidebarDropdown((curr) => !curr);
+  const collapsePeopleSidebarfn = () => setShowPeopleSidebar(false);
+  const showPeopleSidebarfn = () => setShowPeopleSidebar(true);
+
   return (
     <LayoutContext.Provider
       value={{
@@ -17,6 +22,9 @@ export default function LayoutContextProvider({ children }) {
         toggleSidebar,
         showSidebarDropdown,
         toggleSidebarDropdown,
+        showPeopleSidebar,
+        collapsePeopleSidebarfn,
+        showPeopleSidebarfn,
       }}
     >
       {children}

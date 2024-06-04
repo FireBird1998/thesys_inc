@@ -8,9 +8,13 @@ import {
   BookCheck,
 } from "lucide-react";
 import { useKanban } from "./KanbanBoard";
+import { useLayout } from "@/context/layoutContex";
+import Image from "next/image";
+import { p1, p2, p3 } from "@/public/assets";
 
 const Task = ({ task, index, columnId }) => {
   const { deleteTask } = useKanban();
+  const { showPeopleSidebarfn } = useLayout();
   return (
     <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
       {(provided, snapshot) => (
@@ -52,23 +56,29 @@ const Task = ({ task, index, columnId }) => {
               <ClipboardList size={20} />
               <span className="text-xs font-semibold">3</span>
             </div>
-            <div className="flex -space-x-1 overflow-hidden">
-              <img
-                className="inline-block w-6 h-6 rounded-full ring-2 ring-white"
-                src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            <button className="flex -space-x-1 overflow-hidden" onClick={showPeopleSidebarfn}>
+              <Image
+                className="inline-block rounded-full ring-2 ring-white"
+                src={p1}
+                width={24}
+                height={24}
                 alt=""
               />
-              <img
-                className="inline-block w-6 h-6 rounded-full ring-2 ring-white"
-                src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              <Image
+                className="inline-block rounded-full ring-2 ring-white"
+                src={p2}
+                width={24}
+                height={24}
                 alt=""
               />
-              <img
-                className="inline-block w-6 h-6 rounded-full ring-2 ring-white"
-                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+              <Image
+                className="inline-block rounded-full ring-2 ring-white"
+                src={p3}
+                width={24}
+                height={24}
                 alt=""
               />
-            </div>
+            </button>
           </div>
           {provided.placeholder}
         </div>
