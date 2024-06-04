@@ -16,6 +16,7 @@ export const KanbanProvider = ({ children }) => {
   //   console.log("Search", search);
   // }, [search]);
 
+  //these are derived state values for the filtered tasks
   const filteredBacklog = backLog.filter((item) => {
     return (
       item.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -41,12 +42,12 @@ export const KanbanProvider = ({ children }) => {
     );
   });
 
-  useEffect(() => {
-    console.log("Backlog", backLog);
-    console.log("Todo", todo);
-    console.log("In Progress", inProgress);
-    console.log("Done", done);
-  }, [backLog, todo, inProgress, done]);
+  // useEffect(() => {
+  //   console.log("Backlog", backLog);
+  //   console.log("Todo", todo);
+  //   console.log("In Progress", inProgress);
+  //   console.log("Done", done);
+  // }, [backLog, todo, inProgress, done]);
 
   // Function to add a task to a column
   const addToColumn = (columnId, task) => {
@@ -231,7 +232,7 @@ const KanbanBoard = () => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex flex-row items-center justify-between w-full ">
+      <div className="flex flex-row items-center justify-between w-full">
         <Column title="Backlog" tasks={filteredBacklog} id="backlog" />
         <Column title="Todo" tasks={filteredTodo} id="todo" />
         <Column

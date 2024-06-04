@@ -32,7 +32,7 @@ const Column = ({ title, tasks, id }) => {
   };
 
   return (
-    <div className="rounded-md min-w-[230px] board-height overflow-y-scroll flex-grow column">
+    <div className="rounded-md min-w-[25%] max-w-[25%] board-height overflow-y-scroll flex-grow column">
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-start gap-4">
           <h3 className="p-4 text-lg font-semibold">{title}</h3>
