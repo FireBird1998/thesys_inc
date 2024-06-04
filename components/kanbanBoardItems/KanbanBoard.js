@@ -13,7 +13,7 @@ export const KanbanProvider = ({ children }) => {
   const [done, setDone] = useState([]);
   const [search, setSearch] = useState("");
 
-  // Load and restoring the tasks from local storage when the component mounts
+  // Loading and restoring the tasks from local storage when the component mounts
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedBackLog = localStorage.getItem("backLog");
@@ -28,6 +28,7 @@ export const KanbanProvider = ({ children }) => {
     }
   }, []);
 
+  // Saving the tasks to local storage when the tasks change
   useEffect(() => {
     localStorage.setItem("backLog", JSON.stringify(backLog));
   }, [backLog]);
@@ -258,14 +259,11 @@ export const KanbanProvider = ({ children }) => {
   );
 };
 
+//this hook is used to access the context value in the child components
 export const useKanban = () => useContext(KanbanContext);
 
 const KanbanBoard = () => {
   const {
-    backLog,
-    todo,
-    inProgress,
-    done,
     handleDragEnd,
     filteredBacklog,
     filteredTodo,
